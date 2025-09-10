@@ -175,9 +175,17 @@
             }
         }
     }
-    function autocl_en() {
-        if (autoclicker_owned === false) {
-            if (score >= autoclicker_score_threshold) {
+    function autoclicker_en() {
+        if (autoclicker_owned) {
+             if (autoclicker_active) {
+                autoclicker_active = false
+                autoclicker.innerText = "Autoclicker Activate"
+            } else {
+                autoclicker_active = true
+                autoclicker.innerText = "Autoclicker Deactivate"
+            }
+        } else {
+             if (score >= autoclicker_score_threshold) {
                 autoclicker_owned = true
                 autoclicker_value += 1
                 autoclicker_active = true
@@ -190,14 +198,6 @@
                 }
                 document.getElementsByClassName("autoclicker_hidden_class")
                 autoclicker_speed_upgrade.innerText = "Current Speed: " + autoclicker_value + "/sec"
-            }
-        } else {
-            if (autoclicker_active) {
-                autoclicker_active = false
-                autoclicker.innerText = "Autoclicker Activate"
-            } else {
-                autoclicker_active = true
-                autoclicker.innerText = "Autoclicker Deactivate"
             }
         }
     }
