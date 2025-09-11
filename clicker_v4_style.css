@@ -1,0 +1,23 @@
+    body {
+      background: #dadaff; /*use dacaff for light and 202020 for dark*/
+    }
+    #score_counter {
+      display: block;
+      text-align: center;
+      font-weight: normal;
+      font-size: 25px;
+    }
+    #button_main {
+      display: block;
+      margin: auto;
+      width: 60%;
+      aspect-ratio: 5/1;
+      background: #ff0000;
+      border: solid #000000 3px;
+      border-radius: 10px;
+      color: #dfefff;
+      font-size: 3rem;
+    }
+    #button_main:hover {
+      background: #df0000;
+    }
