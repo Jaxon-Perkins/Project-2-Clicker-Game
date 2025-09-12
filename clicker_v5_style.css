@@ -1,0 +1,85 @@
+    body {
+      background: #dadaff; /*use dacaff for light and 202020 for dark*/
+    }
+    a {
+      display: inline;
+      font-size: 1rem;
+      text-decoration: none;
+    }
+    #version_counter {
+        display: inline;
+        float: right;
+        font-size: 1rem;
+    }
+    #score_counter {
+      display: block;
+      text-align: center;
+      font-weight: normal;
+      font-size: 25px;
+    }
+    #button_main {
+      display: block;
+      margin: auto;
+      width: 60%;
+      aspect-ratio: 5/1;
+      background: #f00;
+      border: solid #000 2px;
+      border-radius: 10px;
+      color: #dfefff;
+      font-size: 3rem;
+    }
+    #button_main:hover {
+      background: #df0000;
+    }
+    #div_x2upgrade {
+        margin: 10px 0px;
+    }
+    #button_x2upgrade {
+        display: inline;
+        float: left;
+        margin: 0px 5px;
+        border: solid #000 1px;
+        background: #ff0;
+        color: #000;
+    }
+    .x2upgrade_txt_class {
+        display: inline;
+    }
+    #div_vsautoclicker {
+        margin: 10px 0px;
+    }
+    #button_vsautoclicker {
+        display: inline;
+        float: left;
+        margin: 0px 5px;
+        border: solid #000 1px;
+        background: #0f0;
+        color: #000;
+    }
+    .vsac_hidden_class {
+        visibility: hidden;
+    }
+    #button_vsautoclicker_speed {
+        display: inline;
+        float: left;
+        margin: 0px 5px;
+        border: solid #000 1px;
+        background: #0f0;
+        color: #000;
+    }
+    #button_vsautoclicker_modifier {
+        display: inline;
+        float: left;
+        margin: 0px 5px;
+        border: solid #000 1px;
+        background: #0f0;
+        color: #000;
+        visibility: hidden;
+    }
+    #vsautoclicker_modifier_cost_txt {
+        visibility: hidden;
+    }
+    #div_meme {
+        visibility: hidden;
+        margin: auto;
+    }

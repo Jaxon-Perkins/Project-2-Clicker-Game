@@ -1,0 +1,164 @@
+<!DOCTYPE html>
+<html>
+
+<head>
+    <meta charset="utf-8">
+    <meta name="viewport" content="width=device-width">
+    <title>Clicker Game V5</title>
+    <link rel="stylesheet" href="clicker_v5_style.css">
+</head>
+<body>
+    <a href="index.html"><- Back to Menu</a>
+    <p id="version_counter">V5</p>
+            <div id="div_main">
+                <h1 id="score_counter">0</h1>
+                <button id="button_main">Click Me!</button>
+            </div>
+            <!--all upgrades are contained within this div-->
+            <div id="div_all_upgrades">
+
+                <!--upgrades for a click modifier-->
+                <p>Upgrades Below! </p>
+                <div id="div_2xupgrade">
+                    <button id="button_x2upgrade">X2 Clicks</button>
+                    <p class="x2upgrade_txt_class" id="x2upgrade_cost_txt">Cost=10</p>
+                    <p class="x2upgrade_txt_class" id="x2upgrade_modifier_txt">Current Modifier=1</p>
+                </div> <!--end of x2upgrade div-->
+
+                <!--upgrades for the variable speed autoclicker-->
+                <div id="div_vsautoclicker"> <!--the classes with vsac is short for variable speed autoclicker-->
+                    <button id="button_vsautoclicker"> Autoclicker</button>
+                    <p id="vsautoclicker_cost_txt">Cost=10</p>
+                    <button class="vsac_hidden_class" id="button_vsautoclicker_speed">Speed</button>
+                    <p class="vsac_hidden_class" id="vsautoclicker_speed_cost_txt">Cost=10</p>
+                    <p class="vsac_hidden_class" id="vsautoclicker_speed_txt">Current Speed: 0/sec</p>
+                    <button id="button_vsautoclicker_modifier">Apply Modifier to Autoclicker</button>
+                    <p id="vsautoclicker_modifier_cost_txt">Cost=200</p>
+                </div> <!--end of vsautoclicker div-->
+
+            </div> <!--end of all upgrades div-->
+
+            <!--div for people who need jobs (only is visible after 1000 manual clicks)-->
+            <div id="div_meme">
+                <p>Go get a job, loser</p>
+            </div> <!--disclaimer: this is supposed to be humourous, do not take this seriously-->
+</body>
+
+<!--Warning - Javascript beyond this point-->
+<script>
+    //declaring main variables
+    var clicks = 0
+    var score = 0
+    //declaring 2x Upgrade vars
+    var x2upgrade_modifier = 1
+    var score_threshold = 10
+    //declaring Variable Speed Autoclicker vars
+    var vsautoclicker_active = false
+    var vsautoclicker_owned = false
+    var vsautoclicker_score_threshold = 10
+    var vsautoclicker_value = 1
+    var vsautoclicker_modifier_onwed = false
+
+    //declaring constants
+    const button_main = document.getElementById("button_main")
+    const score_counter = document.getElementById("score_counter")
+    const x2upgrade = document.getElementById("button_x2upgrade")
+    const vsautoclicker = document.getElementById("button_vsautoclicker")
+    const vsautoclicker_speed = document.getElementById("button_vsautoclicker_speed")
+
+    //checking for clicks to run functions
+    button_main.addEventListener("click", score_up)
+    button_main.addEventListener("click", clicks_up)
+    x2upgrade.addEventListener("click", x2upgrade_modifier_up)
+    vsautoclicker.addEventListener("click", vsautoclicker_en)
+    vsautoclicker_speed.addEventListener("click", vsautoclicker_speed_function)
+
+    //defining functions
+    function score_up() {
+        score += x2upgrade_modifier
+        score_counter.innerText = Math.floor(score)
+    }
+    function clicks_up() {
+        clicks += 1
+        if (clicks >= 1000) {
+            document.getElementById("div_meme").style.visibility = 'visible';
+        }
+    }
+    function x2upgrade_modifier_up() {
+        if (score >= score_threshold) {
+            x2upgrade_modifier *= 2
+            document.getElementById("x2upgrade_modifier_txt").innerText = "Current Modifier=" + x2upgrade_modifier
+            score -= score_threshold
+            score_counter.innerText = Math.floor(score)
+            score_threshold *= 4
+            document.getElementById("x2upgrade_cost_txt").innerText = "Cost=" + score_threshold
+            if (vsautoclicker_modifier_onwed) {
+                vsautoclicker_value *= modifier
+                vsautoclicker_speed_upgrade.innerText = "Current Speed: " + vsautoclicker_value + "/sec"
+            }
+        }
+    }
+    function vsautoclicker_en() {
+        if (vsautoclicker_owned) {
+            if (vsautoclicker_active) {
+                vsautoclicker_active = false
+                vsautoclicker.innerText = "Autoclicker Activate"
+            } else {
+                vsautoclicker_active = true
+                vsautoclicker.innerText = "Autoclicker Deactivate"
+            }
+        } else {
+            if (score >= vsautoclicker_score_threshold) {
+                vsautoclicker_owned = true
+                vsautoclicker_active = true
+                score -= vsautoclicker_score_threshold
+                score_counter.innerText = Math.floor(score)
+                document.getElementById("vsautoclicker_cost_txt").style.visibility = 'hidden';
+                vsautoclicker.innerText = "Autoclicker Deactivate"
+                for (let items of document.getElementsByClassName("vsac_hidden_class")) {
+                    items.style.visibility = 'visible';
+                }
+                document.getElementById("vsautoclicker_speed_txt").innerText = "Current Speed: " + vsautoclicker_value + "/sec"
+            }
+        }
+    }
+    function vsautoclicker_function() {
+        if (vsautoclicker_active) {
+            score += vsautoclicker_value
+            score_counter.innerText = Math.floor(score)
+        }
+    }
+    function vsautoclicker_speed_function() {
+        if (score >= vsautoclicker_score_threshold) {
+            vsautoclicker_value += 1
+
+            score -= vsautoclicker_score_threshold
+            if (vsautoclicker_score_threshold >= 50) {
+                vsautoclicker_score_threshold *= 1.5
+            } else {
+                vsautoclicker_score_threshold *= 2
+            }
+            score_counter.innerText = Math.floor(score)
+            if (vsautoclicker_modifier_onwed) () => {
+                vsautoclicker_value *= modifier
+            }
+            document.getElementById("vsautoclicker_speed_txt").innerText = "Current Speed: " + vsautoclicker_value + "/sec"
+            document.getElementById("vsautoclicker_speed_cost_txt").innerText = "Cost=" + vsautoclicker_score_threshold
+        }
+    }
+    
+    //this is a funciton to apply the click modifier to the vs autoclicker
+    //WARNING - THIS FUNCTION IS EXPONENTIAL AND OVERPOWERED
+    document.getElementById("button_vsautoclicker_modifier").addEventListener("click", () => {
+        if (score >= 200)
+            score -= 200
+        vsautoclicker_modifier_onwed = true
+        vsautoclicker_value *= modifier
+        vsautoclicker_speed_upgrade.innerText = "Current Speed: " + vsautoclicker_value + "/sec"
+        document.getElementById("button_vsautoclicker_modifier").style.display = 'none';
+        document.getElementById("vsautoclicker_modifier_cost_txt").style.display = 'none';
+    }
+    )
+    //vsautoclicker is constantly running, it's just adding nothing until you buy the upgrade, then it starts adding 1
+    setInterval(vsautoclicker_function, 1000)
+</script>
