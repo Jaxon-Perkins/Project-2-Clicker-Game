@@ -27,9 +27,10 @@
     #button_main:hover {
       background: #df0000;
     }
+    /*the vsac shortcut is ONLY for vsautoclicker classes*/
     .vsac_button_class{
       display: inline;
-      float: left;/*need to make elements here align with the txt class. also, clear?*/
+      float: left;
       border: solid #000 1px;
       background: #0f0;
       color: #000;
@@ -37,9 +38,10 @@
     }
     .vsac_txt_class {
       display: block;
-    }
+    }/*the txt_class is actually what creates a new line and the buttons
+     are just floated in front of them (left)*/
     .vsac_hidden_class {
-      visibility: hidden !important;
+      visibility: hidden;
     }
     .vsac_mod_hidden_class {
       visibility: hidden !important;
