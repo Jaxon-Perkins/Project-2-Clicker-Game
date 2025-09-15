@@ -65,6 +65,7 @@
     const x2upgrade = document.getElementById("button_x2upgrade")
     const vsautoclicker = document.getElementById("button_vsautoclicker")
     const vsautoclicker_speed = document.getElementById("button_vsautoclicker_speed")
+    const vsac_mod_hidden_class = [document.getElementById("button_vsautoclicker_modifier"), document.getElementById("vsautoclicker_modifier_cost_txt")]
 
     //checking for clicks to run functions
     button_main.addEventListener("click", score_up)
@@ -75,8 +76,17 @@
 
     //defining functions
     function score_up() {
+        let vsac_mod_visible = false
         score += x2upgrade_modifier
         score_counter.innerText = Math.floor(score)
+        if (score >= 200) {
+            vsac_mod_visible = true
+            }
+        if (vsac_mod_visible) {
+            for (let x of vsac_mod_hidden_class) {
+                x.style.visibility = 'visible';
+            }
+        }
     }
     function clicks_up() {
         clicks += 1
@@ -149,6 +159,7 @@
     
     //this is a funciton to apply the click modifier to the vs autoclicker
     //WARNING - THIS FUNCTION IS EXPONENTIAL AND OVERPOWERED
+    //to disable it, go to score_up() and set the if (vsac_mod_visible) statement to be a comment
     document.getElementById("button_vsautoclicker_modifier").addEventListener("click", () => {
         if (score >= 200)
             score -= 200
