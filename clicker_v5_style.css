@@ -68,15 +68,11 @@
         color: #000;
     }
     #button_vsautoclicker_modifier {
-        display: inline;
-        float: left;
+        display: none;
         margin: 0px 5px;
         border: solid #000 1px;
         background: #0f0;
         color: #000;
-        display: none;
-    }
-    #vsautoclicker_modifier_cost_txt {
         display: none;
     }
     #button_ac1 {

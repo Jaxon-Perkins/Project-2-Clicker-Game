@@ -32,14 +32,13 @@
                     <button class="vsac_hidden_class" id="button_vsautoclicker_speed">Speed</button>
                     <p class="vsac_hidden_class" id="vsautoclicker_speed_cost_txt">Cost=10</p>
                     <p class="vsac_hidden_class" id="vsautoclicker_speed_txt">Current Speed: 0/sec</p>
-                    <button id="button_vsautoclicker_modifier">Apply Modifier to Autoclicker</button>
-                    <p id="vsautoclicker_modifier_cost_txt">Cost=200</p>
+                    <button id="button_vsautoclicker_modifier">Apply Modifier to VS Autoclicker</button>
                 </div> <!--end of vsautoclicker div-->
 
                 <!--upgrades for the first autoclicker-->
                 <div id="div_ac1">
                     <button id="button_ac1">Autoclicker 1</button>
-                    <p id="ac1_cost_txt">Cost=50</p>
+                    <p id="ac1_cost_txt">Cost=75</p>
                 </div>
 
             </div> <!--end of all upgrades div-->
@@ -74,14 +73,8 @@
     const x2upgrade = document.getElementById("button_x2upgrade")
     const vsautoclicker = document.getElementById("button_vsautoclicker")
     const vsautoclicker_speed = document.getElementById("button_vsautoclicker_speed")
-    const vsac_mod_hidden_class = [document.getElementById("button_vsautoclicker_modifier"), document.getElementById("vsautoclicker_modifier_cost_txt")]
 
     //checking for clicks to run functions
-    document.getElementById("version_counter").addEventListener("click", ()=> {
-    for (let x of vsac_mod_hidden_class) {
-                x.style.display = 'inline';
-            }
-        })
     button_main.addEventListener("click", ()=>{score_up_mod(1)})
     button_main.addEventListener("click", clicks_up)
     x2upgrade.addEventListener("click", x2upgrade_modifier_up)
@@ -90,7 +83,7 @@
     document.getElementById("button_ac1").addEventListener("click", ac1_en)
 
     //defining functions
-    function score_up(x) { //x here is just a parameter
+    function score_up(x) {
         score += x
         score_counter.innerText = Math.floor(score)
     }
@@ -113,8 +106,8 @@
             score_threshold *= 4
             document.getElementById("x2upgrade_cost_txt").innerText = "Cost=" + score_threshold
             if (vsautoclicker_modifier_onwed) {
-                vsautoclicker_value *= modifier
-                vsautoclicker_speed_upgrade.innerText = "Current Speed: " + vsautoclicker_value + "/sec"
+                vsautoclicker_value *= x2upgrade_modifier
+                document.getElementById("vsautoclicker_speed_txt").innerText = "Current Speed: " + vsautoclicker_value + "/sec"
             }
         }
     }
@@ -151,7 +144,6 @@
     function vsautoclicker_speed_function() {
         if (score >= vsautoclicker_score_threshold) {
             vsautoclicker_value += 1
-
             score -= vsautoclicker_score_threshold
             if (vsautoclicker_score_threshold >= 50) {
                 vsautoclicker_score_threshold *= 1.5
@@ -159,22 +151,24 @@
                 vsautoclicker_score_threshold *= 2
             }
             score_counter.innerText = Math.floor(score)
-            if (vsautoclicker_modifier_onwed) () => {
-                vsautoclicker_value *= modifier
+            if (vsautoclicker_modifier_onwed) {
+                vsautoclicker_value *= x2upgrade_modifier
             }
             document.getElementById("vsautoclicker_speed_txt").innerText = "Current Speed: " + vsautoclicker_value + "/sec"
             document.getElementById("vsautoclicker_speed_cost_txt").innerText = "Cost=" + vsautoclicker_score_threshold
         }
     }
-    //this is a function to apply the click modifier to the VS autoclicker
+    
+    document.getElementById("version_counter").addEventListener("click", ()=> {
+        document.getElementById("button_vsautoclicker_modifier").style.display = 'inline';
+    })
     document.getElementById("button_vsautoclicker_modifier").addEventListener("click", () => {
         //WARNING - THIS FUNCTION IS EXPONENTIAL AND OVERPOWERED
         vsautoclicker_modifier_onwed = true
         vsautoclicker_value *= x2upgrade_modifier
-        vsautoclicker_speed_upgrade.innerText = "Current Speed: " + vsautoclicker_value + "/sec"
+        document.getElementById("vsautoclicker_speed_txt").innerText = "Current Speed: " + vsautoclicker_value + "/sec"
         document.getElementById("button_vsautoclicker_modifier").style.display = 'none';
-        document.getElementById("vsautoclicker_modifier_cost_txt").style.display = 'none';
-    })
+    })//this is a function to apply the click modifier to the VS autoclicker
 
     function ac1_en() {
         if (ac1_owned) {
@@ -186,10 +180,10 @@
                 document.getElementById("button_ac1").innerText = "AC 1 Disable"
             }
         } else {
-            if (score >= 50) {
+            if (score >= 75) {
                 ac1_owned = true
             ac1_active = true
-            score -= 50
+            score -= 75
             score_counter.innerText = Math.floor(score)
             document.getElementById("button_ac1").innerText = "AC 1 Disable"
             document.getElementById("ac1_cost_txt").style.display = 'none';
@@ -198,7 +192,7 @@
     }
     function ac1_function() {
         if (ac1_active) {
-            score_up(2.5)
+            score_up(5)
         }
     }
     
