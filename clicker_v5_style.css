@@ -74,11 +74,23 @@
         border: solid #000 1px;
         background: #0f0;
         color: #000;
-        visibility: hidden;
+        display: none;
     }
     #vsautoclicker_modifier_cost_txt {
-        visibility: hidden;
+        display: none;
     }
+    #button_ac1 {
+        display: block;
+        float: left;
+        margin: 0px 5px;
+        border: solid #000 1px;
+        background: #0ff;
+        color: #000;
+    }
+    #ac1_cost_txt {
+        display: inline;
+    }
+
     #div_meme {
         visibility: hidden;
         margin: auto;
