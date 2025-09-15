@@ -27,7 +27,7 @@
 
                 <!--upgrades for the variable speed autoclicker-->
                 <div id="div_vsautoclicker"> <!--the classes with vsac is short for variable speed autoclicker-->
-                    <button id="button_vsautoclicker"> Autoclicker</button>
+                    <button id="button_vsautoclicker">Variable Speed Autoclicker</button>
                     <p id="vsautoclicker_cost_txt">Cost=10</p>
                     <button class="vsac_hidden_class" id="button_vsautoclicker_speed">Speed</button>
                     <p class="vsac_hidden_class" id="vsautoclicker_speed_cost_txt">Cost=10</p>
@@ -35,6 +35,12 @@
                     <button id="button_vsautoclicker_modifier">Apply Modifier to Autoclicker</button>
                     <p id="vsautoclicker_modifier_cost_txt">Cost=200</p>
                 </div> <!--end of vsautoclicker div-->
+
+                <!--upgrades for the first autoclicker-->
+                <div id="div_ac1">
+                    <button id="button_ac1">Autoclicker 1</button>
+                    <p id="ac1_cost_txt">Cost=50</p>
+                </div>
 
             </div> <!--end of all upgrades div-->
 
@@ -58,6 +64,9 @@
     var vsautoclicker_score_threshold = 10
     var vsautoclicker_value = 1
     var vsautoclicker_modifier_onwed = false
+    //declaring autoclicker_1 vars
+    var ac1_owned = false
+    var ac1_active = false
 
     //declaring constants
     const button_main = document.getElementById("button_main")
@@ -68,25 +77,26 @@
     const vsac_mod_hidden_class = [document.getElementById("button_vsautoclicker_modifier"), document.getElementById("vsautoclicker_modifier_cost_txt")]
 
     //checking for clicks to run functions
-    button_main.addEventListener("click", score_up)
+    document.getElementById("version_counter").addEventListener("click", ()=> {
+    for (let x of vsac_mod_hidden_class) {
+                x.style.display = 'inline';
+            }
+        })
+    button_main.addEventListener("click", ()=>{score_up_mod(1)})
     button_main.addEventListener("click", clicks_up)
     x2upgrade.addEventListener("click", x2upgrade_modifier_up)
     vsautoclicker.addEventListener("click", vsautoclicker_en)
     vsautoclicker_speed.addEventListener("click", vsautoclicker_speed_function)
+    document.getElementById("button_ac1").addEventListener("click", ac1_en)
 
     //defining functions
-    function score_up() {
-        let vsac_mod_visible = false
-        score += x2upgrade_modifier
+    function score_up(x) { //x here is just a parameter
+        score += x
         score_counter.innerText = Math.floor(score)
-        if (score >= 200) {
-            vsac_mod_visible = true
-            }
-        if (vsac_mod_visible) {
-            for (let x of vsac_mod_hidden_class) {
-                x.style.visibility = 'visible';
-            }
-        }
+    }
+    function score_up_mod(x) {
+       score += x * x2upgrade_modifier
+        score_counter.innerText = Math.floor(score)
     }
     function clicks_up() {
         clicks += 1
@@ -156,20 +166,44 @@
             document.getElementById("vsautoclicker_speed_cost_txt").innerText = "Cost=" + vsautoclicker_score_threshold
         }
     }
-    
-    //this is a funciton to apply the click modifier to the vs autoclicker
-    //WARNING - THIS FUNCTION IS EXPONENTIAL AND OVERPOWERED
-    //to disable it, go to score_up() and set the if (vsac_mod_visible) statement to be a comment
+    //this is a function to apply the click modifier to the VS autoclicker
     document.getElementById("button_vsautoclicker_modifier").addEventListener("click", () => {
-        if (score >= 200)
-            score -= 200
+        //WARNING - THIS FUNCTION IS EXPONENTIAL AND OVERPOWERED
         vsautoclicker_modifier_onwed = true
-        vsautoclicker_value *= modifier
+        vsautoclicker_value *= x2upgrade_modifier
         vsautoclicker_speed_upgrade.innerText = "Current Speed: " + vsautoclicker_value + "/sec"
         document.getElementById("button_vsautoclicker_modifier").style.display = 'none';
         document.getElementById("vsautoclicker_modifier_cost_txt").style.display = 'none';
+    })
+
+    function ac1_en() {
+        if (ac1_owned) {
+            if (ac1_active) {
+                ac1_active = false
+                document.getElementById("button_ac1").innerText = "AC 1 Enable"
+            } else {
+                ac1_active = true
+                document.getElementById("button_ac1").innerText = "AC 1 Disable"
+            }
+        } else {
+            if (score >= 50) {
+                ac1_owned = true
+            ac1_active = true
+            score -= 50
+            score_counter.innerText = Math.floor(score)
+            document.getElementById("button_ac1").innerText = "AC 1 Disable"
+            document.getElementById("ac1_cost_txt").style.display = 'none';
+            }
+        }
     }
-    )
-    //vsautoclicker is constantly running, it's just adding nothing until you buy the upgrade, then it starts adding 1
+    function ac1_function() {
+        if (ac1_active) {
+            score_up(2.5)
+        }
+    }
+    
+    //vsautoclicker interval
     setInterval(vsautoclicker_function, 1000)
+    //autoclicker 1 interval
+    setInterval(ac1_function, 1000)
 </script>
